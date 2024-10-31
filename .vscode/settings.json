@@ -5,7 +5,10 @@
         "stdlib.h": "c",
         "string.h": "c",
         "strings.h": "c",
-        "corecrt_wstdlib.h": "c"
+        "corecrt_wstdlib.h": "c",
+        "stdio.h": "c",
+        "__config": "c",
+        "locale": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
