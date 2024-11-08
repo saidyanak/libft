@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 10:20:42 by syanak            #+#    #+#             */
-/*   Updated: 2024/11/05 16:17:04 by syanak           ###   ########.fr       */
+/*   Created: 2024/11/01 10:21:51 by syanak            #+#    #+#             */
+/*   Updated: 2024/11/05 11:57:32 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	void	*ret;
+	char	*ret;
+	size_t	sizes;
+	size_t	i;
 
-	ret = malloc(count * size);
-	if (ret)
+	i = 0;
+	if (!s)
+		return (NULL);
+	sizes = ft_strlen(s);
+	if (start > sizes)
+		return (ft_strdup(""));
+	if (len > sizes - start)
+		len = sizes - start;
+	ret = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (NULL);
+	while (s[i + start] && i < len)
 	{
-		ft_bzero(ret, count * size);
-		return (ret);
+		ret[i] = (char)s[i + start];
+		i++;
 	}
-	return (NULL);
+	ret[i] = '\0';
+	return (ret);
 }

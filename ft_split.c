@@ -1,75 +1,74 @@
-#include <stddef.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 10:16:19 by syanak            #+#    #+#             */
+/*   Updated: 2024/11/05 16:19:12 by syanak           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 #include <stdlib.h>
 
-static	char	*ft_print(char const *ptr, char len)
+static void	freedoublepinter(char **ret)
 {
-	char	*ret;
-	size_t	i;
+	int	i;
 
-	ret = (char*)malloc(sizeof(char) * len + 1);
-	if(!ret)
-		return (NULL);
 	i = 0;
-	while (i < len && ptr[i])
-	{
-		ret[i] = ptr[i];
-		i++;
-	}
-	ret [i] = 0;
-	return (ret);
+	while (ret[i])
+		free(ret[i++]);
+	free(ret);
 }
 
 static	int	ft_count(char const *s, char c)
 {
 	int	count;
+	int	in_word;
 
 	count = 0;
+	in_word = 0;
 	while (*s)
 	{
-		if(*s == c)
+		if (*s == c)
+			in_word = 0;
+		else if (in_word == 0)
+		{
+			in_word = 1;
 			count++;
+		}
 		s++;
 	}
-	return (count + 1);
+	return (count);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int	count;
+	int		k;
 	char	**ret;
-	size_t	k;
-	char	const	*start;
+	size_t	i;
 
-	count = ft_count(s,c);
-	ret = (char **)malloc(sizeof(char*) * (count + 1));
+	k = 0;
+	ret = (char **)malloc(sizeof(char *) * (ft_count(s, c) + 1));
 	if (!ret)
 		return (NULL);
-	k = 0;
-	start = s;
 	while (*s)
 	{
-		if(*s == c)
+		i = 0;
+		while (*s && *s == c)
+			s++;
+		if (*s)
 		{
-			ret[k] = ft_print(start ,s - start);
+			while (s[i] && s[i] != c)
+				i++;
+			ret[k] = ft_substr(s, 0, i);
+			if (!ret[k])
+				return (freedoublepinter(ret), NULL);
+			s += i;
 			k++;
-			start = s + 1;
 		}
-		s++;
 	}
-	ret[k] = ft_print(start , s - start);
-	ret[k + 1] = NULL;
-	return (ret);
-}
-
-int main()
-{
-	char	deneme[] = "den1e1me1234";
-	char **ret = ft_split(deneme,'1');
-	int i = 0;
-	while (ret[i])
-	{
-		printf("%s\n",ret[i]);
-		i++;
-	}
+	return (ret[k] = NULL, ret);
 }

@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/01 10:21:05 by syanak            #+#    #+#             */
+/*   Updated: 2024/11/05 16:17:52 by syanak           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
@@ -10,31 +19,5 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 		if (*lst)
 			new->next = *lst;
 		*lst = new;
-	}
-
-}
-
-int main()
-{
-	t_list	**list;
-	t_list *one;
-	t_list *two;
-	t_list	*new;
-
-	list = (t_list**)malloc(sizeof(t_list*));
-	one = (t_list*)malloc(sizeof(t_list));
-	two = (t_list*)malloc(sizeof(t_list));
-	new = (t_list*)malloc(sizeof(t_list));
-	*list = one;
-	one->content = "said";
-	one->next	= two;
-	two->content = "yanak";
-	two->next 	= NULL;
-	new->content = "alalsdlasd";
-	ft_lstadd_front(list,new);
-	while (*list)
-	{
-		printf("%s",(*list)->content);
-		list = &(*list)->next ;
 	}
 }
